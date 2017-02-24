@@ -16,14 +16,28 @@ namespace CrudAPI.Helpers
             foreach (var item in users)
             {
                 var userDto = new UserDto {
+                    UserId = item.UserId,
                     ContactNumber = "0" + item.ContactNumber.ToString(),
-                    FullName = item.FirstName + " " + item.LastName,
+                    FirstName = item.FirstName,
+                    LastName = item.LastName,
                     UserName = item.UserName
                 };
                 returnDtoList.Add(userDto);
             }
 
             return returnDtoList;
+        }
+
+        public User UserModelFromDto(UserDto userDto)
+        {
+            return new User
+            {
+                UserId = userDto.UserId,
+                ContactNumber = int.Parse(userDto.ContactNumber),
+                FirstName = userDto.FirstName,
+                LastName = userDto.LastName,
+                UserName = userDto.UserName
+            };
         }
     }
 }
