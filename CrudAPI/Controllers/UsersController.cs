@@ -61,6 +61,7 @@ namespace CrudAPI.Controllers
             userModel.FirstName = user.FirstName;
             userModel.LastName = user.LastName;
             userModel.UserName = user.UserName;
+            userModel.Status = true;
             userModel.ContactNumber = int.Parse(user.ContactNumber);
             userContext.Entry(userModel).State = EntityState.Modified;
             userContext.SaveChanges();
@@ -69,6 +70,11 @@ namespace CrudAPI.Controllers
         // DELETE api/values/5
         public void Delete(int id)
         {
+            var model = userContext.Users.Where(u => u.UserId == id).First();
+            User userModel = userContext.Users.Where(u => u.UserId == id).First();
+            userModel.Status = false;
+            userContext.Entry(userModel).State = EntityState.Modified;
+            userContext.SaveChanges();
         }
     }
 }
