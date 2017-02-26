@@ -232,7 +232,6 @@
     <Compile Include="DataLayer\DataAccess\UserContext.cs" />
     <Compile Include="DataLayer\Interfaces\Entity.cs" />
     <Compile Include="DataLayer\Interfaces\IRepository.cs" />
-    <Compile Include="DataLayer\Models\ErrorModel.cs" />
     <Compile Include="Dto\UserDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
