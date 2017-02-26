@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace CrudAPI.DataLayer.Interfaces
 {
@@ -10,7 +6,7 @@ namespace CrudAPI.DataLayer.Interfaces
     {
         IEnumerable<T> List { get; }
         void Add(T entity);
-        void Delete(int id);
+        void Delete(T Entity);
         void Update(T entity);
         T FindById(int Id);
     }

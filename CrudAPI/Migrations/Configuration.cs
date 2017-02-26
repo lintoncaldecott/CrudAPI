@@ -120,6 +120,7 @@ namespace CrudAPI.Migrations
                   new User { FirstName = "Duncan", LastName = "Idaho", Status = true, ContactNumber = 0825241234, UserName = "Duncan@Idaho.com" },
                   new User { FirstName = "Piter", LastName = "De Vries", Status = true, ContactNumber = 0825241234, UserName = "Piter@DeVries.com" }
             };
+
             users.ForEach(s => context.Users.Add(s));
             context.SaveChanges();
         }

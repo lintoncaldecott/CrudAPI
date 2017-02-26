@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using CrudAPI.DataLayer.Interfaces;
 using CrudAPI.DataLayer.Models;
 using CrudAPI.DataLayer.DataAccess;
@@ -32,9 +30,9 @@ namespace CrudAPI.DataLayer
             _userContext.SaveChanges();
         }
 
-        public void Delete(int id)
+        public void Delete(User entity)
         {
-            var entity = this.FindById(id);
+            _userContext.Entry(entity).State = System.Data.Entity.EntityState.Modified;
             entity.Status = false;
             this.Update(entity);
         }
