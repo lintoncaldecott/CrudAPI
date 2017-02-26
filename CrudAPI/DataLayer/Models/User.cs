@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using CrudAPI.DataLayer.Interfaces;
 
 namespace CrudAPI.DataLayer.Models
 {
-    public class User
+    [Table("User")]
+    public partial class User : IEntity
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }

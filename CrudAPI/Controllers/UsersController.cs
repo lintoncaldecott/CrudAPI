@@ -1,28 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Linq;
 using System.Web.Http;
 using CrudAPI.DataLayer.DataAccess;
 using CrudAPI.DataLayer.Models;
 using CrudAPI.Helpers;
-using System.Web.Script.Serialization;
 using Newtonsoft.Json;
 using CrudAPI.Dto;
 using System.Data.Entity;
+using CrudAPI.DataLayer.Interfaces;
+using CrudAPI.DataLayer;
+using System.Collections.Generic;
 
 namespace CrudAPI.Controllers
 {
     public class UsersController : ApiController
     {
-        UserContext userContext = new UserContext();
-
-        // GET api/values
-        public string Get()
+        IRepository<User> repository;
+        public UsersController(UserRepository repository)
+        {
+            this.repository = repository;
+        }
+    // GET api/values
+    public string Get()
         {
             var dtoHelper = new DtoModelHelper();
-            var users = userContext.Users.Where(u => u.Status == true).ToList();
+            var users = repository.List.Where(u => u.Status == true).ToList();
             var returnUsers = dtoHelper.UserDtoFromModel(users);
 
             return JsonConvert.SerializeObject(returnUsers);
@@ -32,7 +33,7 @@ namespace CrudAPI.Controllers
         public string Get(int id)
         {
             var dtoHelper = new DtoModelHelper();
-            var user = userContext.Users.Where(u => u.UserId == id).ToList();
+            List<User> user = new List<User> { repository.FindById(id) };
             var returnUser = dtoHelper.UserDtoFromModel(user);
             if (returnUser != null)
             {
@@ -48,33 +49,26 @@ namespace CrudAPI.Controllers
         public void Post([FromBody]UserDto user)
         {
             var dtoHelper = new DtoModelHelper();
-            
-            User userModel = userContext.Users.Add(dtoHelper.UserModelFromDto(user));
-            userContext.SaveChanges();
+            repository.Add(dtoHelper.UserModelFromDto(user));
         }
 
         // PUT api/values/5
         public void Put(int id, [FromBody]UserDto user)
         {
             var dtoHelper = new DtoModelHelper();
-            User userModel = userContext.Users.Where(u => u.UserId == user.UserId).First();
+            User userModel = repository.FindById(user.UserId);
             userModel.FirstName = user.FirstName;
             userModel.LastName = user.LastName;
             userModel.UserName = user.UserName;
             userModel.Status = true;
             userModel.ContactNumber = int.Parse(user.ContactNumber);
-            userContext.Entry(userModel).State = EntityState.Modified;
-            userContext.SaveChanges();
+            repository.Update(userModel);
         }
 
         // DELETE api/values/5
         public void Delete(int id)
         {
-            var model = userContext.Users.Where(u => u.UserId == id).First();
-            User userModel = userContext.Users.Where(u => u.UserId == id).First();
-            userModel.Status = false;
-            userContext.Entry(userModel).State = EntityState.Modified;
-            userContext.SaveChanges();
+            repository.Delete(id);
         }
     }
 }
