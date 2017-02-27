@@ -4,4 +4,4 @@ unit tests are not implemented because of local machine issues.
 The assumption on the API is that it interacts only with the Front end, json calls with bad data are not checked. 
 All the validation would be managed with the web front end.
 
-still with the dying machine
+still with the dying machine so even writing this readme is an exercise in frustration.
